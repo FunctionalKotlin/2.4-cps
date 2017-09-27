@@ -12,16 +12,20 @@ class Model {
     }
 }
 
+fun isEmpty(model: Model, onTrue: () -> Unit, onFalse: (Int) -> Unit) {
+    model.count { count ->
+        if (count == 0) {
+            onTrue()
+        } else {
+            onFalse(count)
+        }
+    }
+}
+
 fun main(args: Array<String>) {
     val model = Model()
 
-    model.count { count ->
-        if (count == 0) {
-            println("We don't have data")
-        } else {
-            println("We have $count items")
-        }
-    }
+    isEmpty(model, { println("We don't have data") }, { println("We have $it items") })
 
     Thread.sleep(1000)
 }
